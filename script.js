@@ -1,29 +1,16 @@
 
-const inputFirstNum = document.querySelector('#calculator-a');
-const inputSecondNum = document.querySelector('#calculator-b');
-
-const inputs = document.querySelectorAll('.input');
-
-const sumBtn = document.querySelector('#sum_btn');
-const productBtn = document.querySelector('#product_btn');
-
-const clearBtn = document.querySelector('.clear');
-
-const result = document.querySelector('.text_result');
-
-const buttonsWrap = document.querySelector('#button_wrap');
-
-const buttons = document.querySelectorAll('.get-result_btn');
-
-const welcomeText = document.querySelector('.welcome');
-
-const errorWrap = document.querySelector(".error");
-const errorInnerWrap = document.querySelector(".typewriter");
+const INPUT_FIRST = document.querySelector('#calculator-a');
+const INPUT_SECOND = document.querySelector('#calculator-b');
+const INPUTS = document.querySelectorAll('.input');
+const RESULT = document.querySelector('.text_result');
+const BUTTONS = document.querySelectorAll('.get-result_btn');
+const WELCOME_TEXT = document.querySelector('.welcome');
+const ERROR_WRAP = document.querySelector(".typewriter");
 
 setTimeout(() => {
-  welcomeText.classList.add('scale-in-center');
-  welcomeText.getElementsByClassName.display = 'flex';
-  inputFirstNum.autofocus;
+  WELCOME_TEXT.classList.add('scale-in-center');
+  WELCOME_TEXT.style.display = 'flex';
+  INPUT_FIRST.autofocus;
 }, 2000);
 
 const sum = (a, b) => a + b;
@@ -31,19 +18,13 @@ const multiply = (a, b) => a * b;
 const substraction = (a, b) => a - b;
 const divide = (a, b) => a / b;
 
-
-const clear = (el) => {
+const clearText = (el) => {
   el.innerHTML = '';
 }
 
-const clearInputs = () => inputs.forEach((el) => {
-  console.log(el.value);
+const clearInputs = () => INPUTS.forEach((el) => {
   el.value = '';
 });
-
-const errorMsg = () => {
-  alert('Heeey');
-}
 
 const validate = (str) => {
   const reg = /^\d+$/;
@@ -55,37 +36,35 @@ let controlTimeOut;
 
 const typeWriter = () => {
   const speedOFTyping = 90;
-  const errorMessage = 'Oh! I can calculate only nubmers!';
-  errorInnerWrap.innerHTML += errorMessage.charAt(start);
+  const errorMessage = ' Oh! I can calculate only nubmers... <3';
+  ERROR_WRAP.innerHTML += errorMessage.charAt(start);
   start++;
   controlTimeOut = setTimeout(typeWriter, speedOFTyping);
   setTimeout(() => {
     clearTimeout(controlTimeOut);
-    errorInnerWrap.innerHTML = 'Go for it!';
+    ERROR_WRAP.innerHTML = 'Go for it!';
   }, 5000)
 }
 
-buttons.forEach((button) => {
+BUTTONS.forEach((button) => {
   button.addEventListener('click', (element) => {
     start = 0;
     element.preventDefault();
-    const firstValue = inputFirstNum.value;
-    const secondValue = inputSecondNum.value;
-    console.log(typeof firstValue);
-    console.log(typeof secondValue);
+    const firstValue = INPUT_FIRST.value;
+    const secondValue = INPUT_SECOND.value;
     if (element.target.classList.contains('sum_result_btn')) {
       if(validate(firstValue) && validate(secondValue)) {
-        const resOfSum = sum(Number(firstValue), Number(secondValue));
-        result.innerHTML = resOfSum.toFixed(3); 
+        const sumResult = sum(Number(firstValue), Number(secondValue));
+        RESULT.innerHTML = sumResult.toFixed(2); 
       } else {
         typeWriter();
-        //clearInputs()
+        clearInputs()
       }
       
     } else if (element.target.classList.contains('product_result_btn')) {
       if (validate(firstValue) && validate(secondValue)) {
-        const resOfMultiply = multiply(Number(firstValue), Number(secondValue));
-        result.innerHTML = resOfMultiply.toFixed(3);
+        const multiplyResult = multiply(Number(firstValue), Number(secondValue));
+        RESULT.innerHTML = multiplyResult.toFixed(2);
       } else {
         typeWriter();
         clearInputs();
@@ -93,22 +72,22 @@ buttons.forEach((button) => {
       
     } else if (element.target.classList.contains('substraction_result_btn')){
       if (validate(firstValue) && validate(secondValue)) {
-        const resOfSubtraction = substraction(Number(firstValue), Number(secondValue));
-        result.innerHTML = resOfSubtraction.toFixed(3);
+        const subtractionResult = substraction(Number(firstValue), Number(secondValue));
+        RESULT.innerHTML = subtractionResult.toFixed(2);
       } else {
         typeWriter();
         clearInputs()
       }
     } else if (element.target.classList.contains('divide_result_btn')) {
       if (validate(firstValue) && validate(secondValue)) {
-        const resOfDivide = divide(Number(firstValue), Number(secondValue));
-        result.innerHTML = resOfDivide.toFixed(3);
+        const devideResult = divide(Number(firstValue), Number(secondValue));
+        RESULT.innerHTML = devideResult.toFixed(2);
       } else {
         typeWriter();
         clearInputs()
       }
     } else {
-      clear(result);
+      clearText(RESULT);
       clearInputs();
     }
   })

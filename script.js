@@ -37,6 +37,7 @@ const clear = (el) => {
 }
 
 const clearInputs = () => inputs.forEach((el) => {
+  console.log(el.value);
   el.value = '';
 });
 
@@ -50,31 +51,35 @@ const validate = (str) => {
 }
 
 let start = 0;
+let controlTimeOut;
 
 const typeWriter = () => {
   const speedOFTyping = 90;
   const errorMessage = 'Oh! I can calculate only nubmers!';
   errorInnerWrap.innerHTML += errorMessage.charAt(start);
   start++;
-  setTimeout(typeWriter, speedOFTyping);
+  controlTimeOut = setTimeout(typeWriter, speedOFTyping);
   setTimeout(() => {
+    clearTimeout(controlTimeOut);
     errorInnerWrap.innerHTML = 'Go for it!';
   }, 5000)
 }
 
 buttons.forEach((button) => {
   button.addEventListener('click', (element) => {
+    start = 0;
     element.preventDefault();
     const firstValue = inputFirstNum.value;
     const secondValue = inputSecondNum.value;
-
+    console.log(typeof firstValue);
+    console.log(typeof secondValue);
     if (element.target.classList.contains('sum_result_btn')) {
       if(validate(firstValue) && validate(secondValue)) {
         const resOfSum = sum(Number(firstValue), Number(secondValue));
         result.innerHTML = resOfSum.toFixed(3); 
       } else {
         typeWriter();
-        clearInputs()
+        //clearInputs()
       }
       
     } else if (element.target.classList.contains('product_result_btn')) {
@@ -83,7 +88,7 @@ buttons.forEach((button) => {
         result.innerHTML = resOfMultiply.toFixed(3);
       } else {
         typeWriter();
-        clearInputs()
+        clearInputs();
       }
       
     } else if (element.target.classList.contains('substraction_result_btn')){

@@ -36,7 +36,7 @@ let controlTimeOut;
 
 const typeWriter = () => {
   const speedOFTyping = 90;
-  const errorMessage = ' Oh! I can calculate only nubmers... <3';
+  const errorMessage = ' Oh! I can calculate only numbers... <3';
   ERROR_WRAP.innerHTML += errorMessage.charAt(start);
   start++;
   controlTimeOut = setTimeout(typeWriter, speedOFTyping);
